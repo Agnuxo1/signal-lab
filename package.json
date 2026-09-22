@@ -1,0 +1,16 @@
+{
+  "name": "signal-lab",
+  "version": "2.0.0",
+  "private": false,
+  "description": "Browser-first capture and cognitive architecture for metal detector audio datasets.",
+  "type": "module",
+  "scripts": {
+    "start": "node scripts/serve.mjs",
+    "test": "node --test",
+    "check": "node scripts/check.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "license": "Apache-2.0"
+}
