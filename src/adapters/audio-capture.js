@@ -7,6 +7,7 @@ export class AudioCaptureAdapter {
     this.chunks = [];
     this.startedAt = 0;
     this.timer = null;
+    this.inputDeviceLabel = null;
   }
 
   async start({ durationSec, preferredDeviceId } = {}) {
@@ -14,6 +15,8 @@ export class AudioCaptureAdapter {
     if (this.recorder) throw new Error('Ya hay una grabación activa.');
     const constraints = { audio: preferredDeviceId ? { deviceId: { exact: preferredDeviceId }, echoCancellation: false, noiseSuppression: false, autoGainControl: false } : { echoCancellation: false, noiseSuppression: false, autoGainControl: false } };
     this.stream = await navigator.mediaDevices.getUserMedia(constraints);
+    this.inputDeviceLabel = this.stream.getAudioTracks()[0]?.label || null;
+    const inputDeviceLabel = this.inputDeviceLabel;
     const mimeType = ['audio/webm;codecs=opus', 'audio/webm', 'audio/ogg'].find((type) => MediaRecorder.isTypeSupported(type)) || '';
     this.recorder = new MediaRecorder(this.stream, mimeType ? { mimeType } : undefined);
     this.chunks = [];
@@ -25,7 +28,7 @@ export class AudioCaptureAdapter {
       this.recorder.onstop = () => {
         const durationActualSec = Math.max(0, (performance.now() - this.startedAt) / 1000);
         const blob = new Blob(this.chunks, { type: mimeType || 'audio/webm' });
-        resolve({ blob, mimeType: blob.type, durationActualSec, inputDeviceLabel: this.stream.getAudioTracks()[0]?.label || null, source: 'browser-mediarecorder' });
+        resolve({ blob, mimeType: blob.type, durationActualSec, inputDeviceLabel, source: 'browser-mediarecorder' });
       };
     });
     this.recorder.start(250);
@@ -45,6 +48,7 @@ export class AudioCaptureAdapter {
     for (const track of this.stream?.getTracks?.() || []) track.stop();
     this.stream = null;
     this.recorder = null;
+    this.inputDeviceLabel = null;
     this.onState('idle');
   }
 
