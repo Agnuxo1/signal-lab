@@ -6,6 +6,10 @@
 
 [![Estado](https://img.shields.io/badge/status-v2.0%20advanced-f0a95e)](#estado) [![Runtime](https://img.shields.io/badge/runtime-browser--first-6de0db)](#cómo-funciona) [![License](https://img.shields.io/badge/license-Apache--2.0-91a0aa)](LICENSE)
 
+<!-- impact-note:start -->
+<sub><strong>Efficiency and practical value.</strong> Signal Lab turns detector recordings into comparable, locally stored sessions with capture context and provenance attached. Its guided protocol and validated exports help avoid unusable recordings and repeated manual labelling, while browser storage removes the need for an automatic upload service. The <a href="#la-versión-avanzada">implemented capture workflow</a> supports dataset preparation; material identification remains a later research step.</sub>
+<!-- impact-note:end -->
+
 ## Por qué existe
 
 Los detectores económicos suelen condensar mucha información en una respuesta sonora aparentemente sencilla. El objetivo de este proyecto es capturar esa señal con un protocolo estable, conservar su contexto y preparar una base sólida para experimentar después con extracción de características y modelos de IA.
